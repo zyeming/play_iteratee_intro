@@ -425,7 +425,7 @@
       <div class='content'>
         <h3>定义帮助方法</h3>
         
-        <p><textarea class='code' display='none' mode='scala'>// 讲一个SimpleResult转换为Future[String]&#x000A;def readBody(result: SimpleResult)(&#x000A;  implicit codec: Codec): Future[String] = {&#x000A;  result.body.run(Iteratee.consume()).&#x000A;    map(bytes => new String(bytes, codec.charset))&#x000A;}&#x000A;&#x000A;// 将多个Future[SimpleResult]组装成一个Future[Html]&#x000A;def readBody(results: Future[SimpleResult]*)(&#x000A;  implicit codec: Codec): Future[Html] = {&#x000A;  // 转化为Try，便于做filter&#x000A;  val contents: Seq[Future[Try[String]]] =&#x000A;    results.map(_.flatMap(readBody).map(futureToTry)&#x000A;  val contentsF: Future[Seq[Try[String]]] = &#x000A;    Future.sequence(contents)&#x000A;&#x000A;  // 过滤掉记录的Result，并组装成一个Html&#x000A;  contentsF.map(_.filter(_.isSuccess).map(_.get)).&#x000A;   map { content => Html(content.mkString)}&#x000A;}</textarea>
+        <p><textarea class='code' display='none' mode='scala'>// 讲一个SimpleResult转换为Future[String]&#x000A;def readBody(result: SimpleResult)(&#x000A;  implicit codec: Codec): Future[String] = {&#x000A;  result.body.run(Iteratee.consume()).&#x000A;    map(bytes => new String(bytes, codec.charset))&#x000A;}&#x000A;&#x000A;// 将多个Future[SimpleResult]组装成一个Future[Html]&#x000A;def readBody(results: Future[SimpleResult]*)(&#x000A;  implicit codec: Codec): Future[Html] = {&#x000A;  // 转化为Try，便于做filter&#x000A;  val contents: Seq[Future[String]]] =&#x000A;    results.map(_.flatMap(readBody)&#x000A;  val contentsF = Future.sequence(contents)&#x000A;  contentsF.map { content => Html(content.mkString)}&#x000A;}</textarea>
     </p>
       </div>
       <div class='spacer bottom'></div>

@@ -456,14 +456,10 @@ def index = Action.async {
   def readBody(results: Future[SimpleResult]*)(
     implicit codec: Codec): Future[Html] = {
     // 转化为Try，便于做filter
-    val contents: Seq[Future[Try[String]]] =
-      results.map(_.flatMap(readBody).map(futureToTry)
-    val contentsF: Future[Seq[Try[String]]] = 
-      Future.sequence(contents)
-
-    // 过滤掉记录的Result，并组装成一个Html
-    contentsF.map(_.filter(_.isSuccess).map(_.get)).
-     map { content => Html(content.mkString)}
+    val contents: Seq[Future[String]]] =
+      results.map(_.flatMap(readBody)
+    val contentsF = Future.sequence(contents)
+    contentsF.map { content => Html(content.mkString)}
   }
 ```
 
