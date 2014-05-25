@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta charset='utf-8'>
+    <meta content='width=1024, user-scalable=no' name='viewport'>
+    <!-- deck.js's core css -->
+    <link href="deck.js/core/deck.core.css" rel="stylesheet" type="text/css"/>
+    <!-- deck.js extension CSS files -->
+    <link href="deck.js/extensions/codemirror/deck.codemirror.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/goto/deck.goto.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/hash/deck.hash.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/menu/deck.menu.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/navigation/deck.navigation.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/scale/deck.scale.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/status/deck.status.css" rel="stylesheet" type="text/css"/>
+    <!-- all css in the css dir: Keydown CSS, your custom CSS, and themes from deck.js -->
+    <link href="css/keydown.css" rel="stylesheet" type="text/css"/>
+    <link href="css/default.css" rel="stylesheet" type="text/css"/>
+    <link href="css/horizontal-slide.css" rel="stylesheet" type="text/css"/>
+    <link href="css/play.css" rel="stylesheet" type="text/css"/>
+    <link href="css/swiss.css" rel="stylesheet" type="text/css"/>
+    <!-- Modernizr (provided for legacy browsers) -->
+    <script src="deck.js/support/modernizr.custom.js" type="text/javascript"></script>
+  </head>
+  <body class='deck-container keydown'>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>Play中的Iteratee及其用途</h1>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>About Me</h3>
+        
+        <ul>
+        <li>@看处方</li>
+        <li>C -> C++ -> Java -> Scala</li>
+        <li>用Scala开发过:
+        
+        <ul>
+        <li>乐知分享插件</li>
+        <li>看处方网站</li>
+        <li>杏仁医生后端</li>
+        </ul>
+        </li>
+        </ul>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>Iterator</h1>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>使用Iterator计算数字的总和</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>val l = List(1, 2, 3, 4, 5) &#x000A;var total = 0 &#x000A;var it = l.iterator &#x000A;while (it.hasNext) {&#x000A;  total += it.next&#x000A;}&#x000A;total</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>使用foreach计算数字的总和</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>val l = List(1, 2, 3, 4, 5) &#x000A;var total = 0&#x000A;def step(item: Int) = total += item&#x000A;l foreach step&#x000A;total</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>当然也可以写成这样</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>l.foldLeft(0){ (total, elt) => total + elt }</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>尝试下自己来实现foreach</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>def foreach(l: List[Int]) = {&#x000A;  def step(l: List[Int], total: Int): Int = {&#x000A;    l match {&#x000A;      case List() => total&#x000A;      case List(elt) => total + elt&#x000A;      case head :: tail => step(tail, total + head)&#x000A;    }&#x000A;  }&#x000A;&#x000A;  step(l, 0)&#x000A;}&#x000A;&#x000A;val l = List(1, 2, 3, 4, 5) &#x000A;foreach(l)</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>迭代过程</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>step(List(1, 2, 3, 4, 5), 0)&#x000A;step(List(2, 3, 4, 5), 1)&#x000A;step(List(3, 4, 5), 3)&#x000A;step(List(4, 5), 6)&#x000A;step(List(5), 10)&#x000A;15</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>Enumerator</h1>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>Enumerator是Collection的升级版</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>// an enumerator of Integers&#x000A;val integerE: Enumerator[Int] = &#x000A;  Enumerate(123, 456, 789)&#x000A;&#x000A;// an Enumerator from a file&#x000A;val fileE: Enumerator[Array[Byte]] = &#x000A;  Enumerator.fromFile("myfile.txt")&#x000A;&#x000A;// an Enumerator generated by a callback&#x000A;// notice the Promise.timeout which is non-block&#x000A;val dateE: Enumerator[Date] = &#x000A;  Enumerator.fromCallback { () => &#x000A;    Promise.timeout(Some(new Date), 100 milliseconds) &#x000A;  }</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>Enumerator是一个生产者（Producer）。</h3>
+        
+        <p>Enumerator[E]的作用是生成类型为E的数据块。这些数据块的类型是Input[E]，包括：</p>
+        
+        <ol>
+        <li>Input.EL[E]：类型为E的数据块。</li>
+        <li>Input.Empty：Enumerator为空。</li>
+        <li>Input.EOF：Enumerator已结束。</li>
+        </ol>
+        
+        
+        <p>Enumerator是异步非阻塞的。在没有消费者（Consumer）的情况下，它不会实际生成任何数据。</p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>Iteratee</h1>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>Iteratee就是函数式编程里的Iterator</h3>
+        
+        <p>Iteratee是Enumerator的消费者（Consumer）。</p>
+        
+        <p>Iteratee[E, +A]的作用就是接受类型为E的输入，通过一些列的迭代过程，将其转换为类型为A的输出。</p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>用Iteratee实现加和计算</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>val iteratee = Iteratee.fold(0){ &#x000A;    (total: Int, n: Int) => total + n &#x000A;}&#x000A;val enumerator = Enumerator(1, 2, 3, 4, 5)&#x000A;enumerator.run(iteratee)    // 返回Future[Int]</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>Iteratee是一个状态机</h3>
+        
+        <p>Iteratee有三种状态：</p>
+        
+        <ol>
+        <li>Cont[E, A](k: Input[E] => Iteratee[E, A])</li>
+        <li>Done(a: A, e: Input[E])</li>
+        <li>Error[E](msg: String, input: Input[E])</li>
+        </ol>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>自己定义一个Iteratee</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>def totalIteratee: Iteratee[Int, Int] = {&#x000A;  def step(total: Int)(i: Input[Int]): &#x000A;  Iteratee[Int, Int] = i match {&#x000A;    case Input.EOF | Input.Empty => &#x000A;      Done(total, Input.EOF)&#x000A;    case Input.El(e) => &#x000A;      Cont[Int, Int](i => step(total + e)(i))&#x000A;  }&#x000A;&#x000A;  (Cont[Int, Int](i => step(0)(i)))&#x000A;}&#x000A;&#x000A;val enumerator = Enumerator(1, 2, 3, 4, 5)&#x000A;enumerator.run(totalIteratee)    // 返回Future[Int]</textarea>
+    </p>
+        
+        <p><em>和之前foreach的实现类似，Iteratee每一次迭代时，根据当前的状态及输入Input[E]，决定下一步的状态。直到到达Done或Error。</em></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>迭代过程</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>Cont[Int, Int](i => step(0)(i))&#x000A;Input.El[Int](1) -> Cont[Int, Int](i => step(1)(i))&#x000A;Input.El[Int](2) -> Cont[Int, Int](i => step(3)(i))&#x000A;Input.El[Int](3) -> Cont[Int, Int](i => step(6)(i))&#x000A;Input.El[Int](4) -> Cont[Int, Int](i => step(10)(i))&#x000A;Input.El[Int](5) -> Cont[Int, Int](i => step(15)(i))&#x000A;Input.EOF -> Done(15, Input.EOF)</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>Enumeratee</h1>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>Enumeratee是一个Iteratee和Enumerator的适配器</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>val enumerator = Enumerator(1, 2, 3, 4, 5)&#x000A;val iteratee: Iteratee[String, List[String]] = …&#x000A;val list: List[String] = enumerator.through(&#x000A;    Enumeratee.map(_.toString) run iteratee)</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>Iteratee和Enumerator在Play中的使用</h1>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>Play中HTTP请求的处理都是以Iteratee和Enumerator为基础的。</h3>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>Play的HTTP处理模块本质上就是类型声明如下的API</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>RequestHeader -> Array[Byte] -> Result</textarea>
+    </p>
+        
+        <p><em>Play首先获取请求的Header、然后是Body，最后返回一个类型为Result的响应。</em></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>Play中Action的类型声明</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>trait EssentialAction extends (&#x000A;  RequestHeader => Iteratee[Array[Byte], Result])</textarea>
+    </p>
+        
+        <p><em>如果把请求Body作为一个数据流，按需处理的话，Iteratee就可以在这里派上用处了。</em></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>Play中Action的类型声明</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>case class SimpleResult(headers:ResponseHeaders, &#x000A;                        body:Enumerator[Array[Byte]])</textarea>
+    </p>
+        
+        <p><em>Result包含两个部分，一个响应Header和一个类型为Array[Byte]的响应Body。同样，如果把响应Body做成一个数据流，按需输出的话，就是一个Enumerator了。</em></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>一个Action的例子</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>def index = Action {&#x000A;  SimpleResult(&#x000A;    header = ResponseHeader(200),&#x000A;    body = Enumerator("Hello World")&#x000A;  )&#x000A;}</textarea>
+    </p>
+        
+        <p><em>可以简写为 Ok("Hello World")</em></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>Chunked响应</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>def index = Action {&#x000A;  Ok.chunked(&#x000A;    Enumerator("kiki", "foo", "bar").&#x000A;      andThen(Enumerator.eof)&#x000A;  )&#x000A;}</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>Chunked输出</h3>
+        
+        <p><textarea class='code' display='none' mode='&#x000A;HTTP/1.1 200 OK'>Content-Type: text/plain; charset=utf-8&#x000A;Transfer-Encoding: chunked&#x000A;&#x000A;4&#x000A;kiki&#x000A;3&#x000A;foo&#x000A;3&#x000A;bar&#x000A;0</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>WebSocket处理</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>def index = WebSocket.using[String] { request => &#x000A;  // Just consume and ignore the input&#x000A;  val in = Iteratee.consume[String]()&#x000A;  // Send a single 'Hello!' message and close&#x000A;  val out = Enumerator("Hello!").andThen(Enumerator.eof)&#x000A;  &#x000A;  (in, out)&#x000A;}</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>WS</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>// Make the request (Play 2.3)&#x000A;val futureResponse: &#x000A;  Future[(WSResponseHeaders, Enumerator[Array[Byte]])] = &#x000A;    WS.url(url).getStream()&#x000A;&#x000A;val bytesReturned: Future[Long] = futureResponse.flatMap {&#x000A;  case (headers, body) =>&#x000A;    // Count the number of bytes returned&#x000A;    body |>>> Iteratee.fold(0l) { (total, bytes) =>&#x000A;      total + bytes.length&#x000A;    }&#x000A;}</textarea>
+    </p>
+        
+        <p><em>WS是Play中用于访问外部HTTP应用的库。如果这个请求返回的内容很大，可能就需要用流的方式来处理。</em></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>Play页面模块实现</h1>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='full-background slide zhou'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>注意！一大波代码即将来袭！</h2>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='full-background kcf left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>问题：</h2>
+        
+        <h2>如何实现页面侧边栏？</h2>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>实现页面Template</h3>
+        
+        <p><textarea class='code' display='none' mode='html'>@(..., counts: (Int, Int), tags: List[String])&#x000A;<html>&#x000A;  <head>...</head>&#x000A;  <body>&#x000A;    ...&#x000A;    <div class="sidebar">&#x000A;      @views.html.sidebar.counts(counts)&#x000A;      @views.html.sidebar.myTags(tags)&#x000A;    </div>&#x000A;  </body>&#x000A;</html></textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>实现Action</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>def index = Action.async {&#x000A;  ...&#x000A;  val counts = getCounts(...)&#x000A;  val tags = getMyTags(...)&#x000A;  Ok(views.html.page(..., counts, tags))&#x000A;}</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>存在的问题</h3>
+        
+        <ol>
+        <li>模块性差。</li>
+        <li>错误处理麻烦。</li>
+        <li>影响主页面加载。</li>
+        </ol>
+        
+        
+        <p>如何解决？</p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>定义侧边栏模块，包括Action及其页面Template</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>def currentCounts(): Future[SimpleResult] = future {&#x000A;  val counts = getCounts(...)&#x000A;  Ok(views.html.sidebar.counts(counts))&#x000A;}</textarea>
+    </p>
+        
+        <p><em>注意返回的是Future</em></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>将侧边栏模块嵌入主页面Template</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>@(..., sidebar: Html)&#x000A;<html>&#x000A;  <head>...</head>&#x000A;  <body>&#x000A;    ...&#x000A;    <div class="sidebar">&#x000A;      @sidebar&#x000A;    </div>&#x000A;  </body>&#x000A;</html></textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>主页面Action实现</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>def index = Action.async {&#x000A;  ...&#x000A;  Pagelet.readBody(&#x000A;    currentCounts(),&#x000A;    myTags()&#x000A;  ).map { sidebar =>&#x000A;    Ok(views.html.page(..., sidebar))&#x000A;  }&#x000A;}</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>定义帮助方法</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>// 讲一个SimpleResult转换为Future[String]&#x000A;def readBody(result: SimpleResult)(&#x000A;  implicit codec: Codec): Future[String] = {&#x000A;  result.body.run(Iteratee.consume()).&#x000A;    map(bytes => new String(bytes, codec.charset))&#x000A;}&#x000A;&#x000A;// 将多个Future[SimpleResult]组装成一个Future[Html]&#x000A;def readBody(results: Future[SimpleResult]*)(&#x000A;  implicit codec: Codec): Future[Html] = {&#x000A;  // 转化为Try，便于做filter&#x000A;  val contents: Seq[Future[Try[String]]] =&#x000A;    results.map(_.flatMap(readBody).map(futureToTry)&#x000A;  val contentsF: Future[Seq[Try[String]]] = &#x000A;    Future.sequence(contents)&#x000A;&#x000A;  // 过滤掉记录的Result，并组装成一个Html&#x000A;  contentsF.map(_.filter(_.isSuccess).map(_.get)).&#x000A;   map { content => Html(content.mkString)}&#x000A;}</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>实现BigPipe</h1>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>页面Template</h3>
+        
+        <p><textarea class='code' display='none' mode='html'>@(sidebar: utils.HtmlStream)&#x000A;<html>&#x000A;<head></head>&#x000A;<body>&#x000A;  <div class="container">&#x000A;    <p>内容内容内容！！</p>&#x000A;    <div class="sidebar">@sidebar</div>&#x000A;  </div>&#x000A;</body>&#x000A;</html></textarea>
+    </p>
+        
+        <p><em>页面模板为page.scala.stream，注意结尾的stream说明这是一个自定义的Play页面模板。但其内容和普通的html模板没有区别，只是Html的内容都改为HtmlStream。</em></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>Action实现</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>def index = Action {&#x000A;  val sidebar = Pagelet.streamBody(&#x000A;    currentCounts(),&#x000A;    discusses(),&#x000A;    myTags()&#x000A;  )&#x000A;  Ok.chunked(views.stream.index(sidebar))&#x000A;}</textarea>
+    </p>
+        
+        <p><em>因为Stream和chunked响应本身就是异步输出，所以不需要async和Future。</em></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>添加Play的自定义模板配置（build.sbt）</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>play.Keys.templatesTypes ++= Map(&#x000A;    "stream" -> "utils.HtmlStreamFormat")&#x000A;&#x000A;play.Keys.templatesImport ++= Vector(&#x000A;    "utils.HtmlStream", "utils.HtmlStream._")</textarea>
+    </p>
+        
+        <p><em>要实现自定义模板，必须定义一个Appendable类和一个Format类。</em></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>定义HtmlStream</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>case class HtmlStream(enumerator: Enumerator[Html]) &#x000A;  extends Appendable[HtmlStream] {&#x000A;  def +=(other: HtmlStream): HtmlStream = andThen(other)&#x000A;  def andThen(other: HtmlStream): HtmlStream = &#x000A;    HtmlStream(enumerator.andThen(other.enumerator))&#x000A;}&#x000A;&#x000A;object HtmlStream {&#x000A;  def interleave(streams: HtmlStream*): HtmlStream = {&#x000A;    HtmlStream(Enumerator.interleave(streams.map(_.enumerator)))&#x000A;  }&#x000A;  def flatten(streamF: Future[HtmlStream]): HtmlStream = {&#x000A;    HtmlStream(Enumerator.flatten(streamF.map(_.enumerator)))&#x000A;  }&#x000A;  def apply(text: String): HtmlStream = {&#x000A;    HtmlStream(Enumerator(Html(text)))&#x000A;  }&#x000A;  def apply(eventualText: Future[String]): HtmlStream = {&#x000A;    flatten(eventualText.map(apply))&#x000A;  }&#x000A;}</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>定义HtmlStreamFormat</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>object HtmlStreamFormat extends Format[HtmlStream] {&#x000A;  def raw(text: String): HtmlStream = {&#x000A;    HtmlStream(text)&#x000A;  }&#x000A;  def escape(text: String): HtmlStream = {&#x000A;    raw(HtmlFormat.escape(text).body)&#x000A;  }&#x000A;}</textarea>
+    </p>
+        
+        <p><em>HtmlStreamFormat告诉Play如何将模板文件转换为HtmlStream。</em></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>定义隐式转换：</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>implicit def toEnumerator(&#x000A;    stream: HtmlStream): Enumerator[Html] = {&#x000A;  // Skip empty chunks, as these mean EOF&#x000A;  stream.enumerator.through(&#x000A;    Enumeratee.filter(!_.body.isEmpty))&#x000A;}</textarea>
+    </p>
+        
+        <p><em>Ok.chunked接受的参数是Enumerator类型，可以通过隐式转换实现。</em></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>最后，定义streamBody方法：</h3>
+        
+        <p><textarea class='code' display='none' mode='scala'>// 将多个SimpleResult组装为一个HtmlStream。&#x000A;// 因为HtmlStream本身就是异步的，所以没有Future。&#x000A;def streamBody(results: Future[SimpleResult]*)(&#x000A;  implicit codec: Codec): HtmlStream = {&#x000A;&#x000A;  val contents: Seq[Future[String]] = &#x000A;    results.map(_.flatMap(readBody(_)))&#x000A;  val streams: Seq[HtmlStream] = &#x000A;    contents.map(HtmlStream(_))&#x000A;  HtmlStream.interleave(streams: _*)&#x000A;}</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h3>最终结果(curl -raw):</h3>
+        
+        <p><textarea class='code' display='none' mode='html'>72&#x000A;<html>&#x000A;<head></head>&#x000A;<body>&#x000A;  <div class="container">&#x000A;    <p>内容内容内容！！</p>&#x000A;    <div class="sidebar">&#x000A;17&#x000A;这是标签！！<br/>&#x000A;20&#x000A;当前帖子量：100！！<br/>&#x000A;1d&#x000A;这是热门帖子！！<br/>&#x000A;1f&#x000A;</div>&#x000A;  </div>&#x000A;</body>&#x000A;</html>&#x000A;0</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>Q&amp;A</h1>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <!-- deck.js navigation extension -->
+    <a class='deck-prev-link' href='#' title='Previous'>&#8592;</a>
+    <a class='deck-next-link' href='#' title='Next'>&#8594;</a>
+    <!-- deck.js hash extension -->
+    <a class='deck-permalink' href='.' title='Permalink to this slide'>#</a>
+    <!-- deck.js status extension -->
+    <p class='deck-status'>
+      <span class='deck-status-current'></span>
+      /
+      <span class='deck-status-total'></span>
+    </p>
+    <!-- jQuery & deck.js -->
+    <script src="deck.js/support/jquery.1.6.4.min.js" type="text/javascript"></script>
+    <script src="deck.js/core/deck.core.js" type="text/javascript"></script>
+    <!-- deck.js extension JS files -->
+    <script src="deck.js/extensions/codemirror/codemirror.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/deck.codemirror.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/clike/clike.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/clojure/clojure.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/coffeescript/coffeescript.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/css/css.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/diff/diff.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/haskell/haskell.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/htmlmixed/htmlmixed.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/javascript/javascript.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/lua/lua.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/php/php.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/plsql/plsql.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/python/python.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/r/r.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/rst/rst.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/ruby/ruby.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/scheme/scheme.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/smalltalk/smalltalk.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/sparql/sparql.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/stex/stex.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/velocity/velocity.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/xml/xml.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/xmlpure/xmlpure.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/yaml/yaml.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/goto/deck.goto.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/hash/deck.hash.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/menu/deck.menu.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/navigation/deck.navigation.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/scale/deck.scale.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/status/deck.status.js" type="text/javascript"></script>
+    <!-- your custom JS here, including call to initialize deck.js-codemirror -->
+    <script src="js/play.js" type="text/javascript"></script>
+    <!-- Initialize the deck. -->
+    <script type='text/javascript'>
+      $(function() { $.deck('.slide'); });
+    </script>
+  </body>
+</html>
