@@ -119,12 +119,26 @@ val dateE: Enumerator[Date] =
 
 Enumerator[E]的作用是生成类型为E的数据块。这些数据块的类型是Input[E]，包括：
 
-1. Input.EL[E]：类型为E的数据块。
+1. Input.El[E]：类型为E的数据块。
 1. Input.Empty：Enumerator为空。
 1. Input.EOF：Enumerator已结束。
 
 
 Enumerator是异步非阻塞的。在没有消费者（Consumer）的情况下，它不会实际生成任何数据。
+
+!SLIDE left
+
+###例如
+
+```scala
+val fileE: Enumerator[Array[Byte]] = 
+  Enumerator.fromFile("myfile.txt")
+```
+
+- 运行到这行代码时，它并没有真正的去读文件。
+- 只有把Enumerator和一个消费者绑定时，它才会开始读文件，而且是以异步（类似Future)的方式。
+- 每次消费者需要数据时，这个Enumerator会生成一个类型为Input.El[Array[Byte]]的数据块。每个块默认大小为8k，当然最后一个数据块的大小很可能是小于8k的。
+- 如果文件已经读完了，这个Enumerator则会生成一个Input.EOF。
 
 !SLIDE
 
@@ -136,7 +150,7 @@ Enumerator是异步非阻塞的。在没有消费者（Consumer）的情况下�
 
 Iteratee是Enumerator的消费者（Consumer）。
 
-Iteratee[E, +A]的作用就是接受类型为E的输入，通过一些列的迭代过程，将其转换为类型为A的输出。
+Iteratee[E, +A]的作用就是接受类型为E的输入，通过一系列的迭代过程，将其转换为类型为A的输出。
 
 !SLIDE 
 
@@ -160,6 +174,8 @@ Iteratee有三种状态：
 1. Done(a: A, e: Input[E])
 1. Error\[E](msg: String, input: Input[E])
 
+这些状态本身也是Iteratee。
+
 !SLIDE
 
 ###自己定义一个Iteratee
@@ -173,7 +189,7 @@ def totalIteratee: Iteratee[Int, Int] = {
     case Input.El(e) => 
       Cont[Int, Int](i => step(total + e)(i))
   }
-
+  // 返回一个初始状态的Iteratee
   (Cont[Int, Int](i => step(0)(i)))
 }
 
@@ -181,20 +197,21 @@ val enumerator = Enumerator(1, 2, 3, 4, 5)
 enumerator.run(totalIteratee)    // 返回Future[Int]
 ```
 
-*和之前foreach的实现类似，Iteratee每一次迭代时，根据当前的状态及输入Input[E]，决定下一步的状态。直到到达Done或Error。*
+*和之前foreach的实现类似，Iteratee每一次迭代时，根据当前的状态，以及从Enumerator得到类型为Input[E]的输入，决定下一步的状态。直到到达Done或Error，或者Enumerator没有更多数据。*
 
 !SLIDE
 
 ###迭代过程
 
 ```scala
-Cont[Int, Int](i => step(0)(i))
+Cont[Int, Int](i => step(0)(i))   // 初始状态
 Input.El[Int](1) -> Cont[Int, Int](i => step(1)(i))
 Input.El[Int](2) -> Cont[Int, Int](i => step(3)(i))
 Input.El[Int](3) -> Cont[Int, Int](i => step(6)(i))
 Input.El[Int](4) -> Cont[Int, Int](i => step(10)(i))
 Input.El[Int](5) -> Cont[Int, Int](i => step(15)(i))
-Input.EOF -> Done(15, Input.EOF)
+// 结束状态，Enumerator会从结束状态的Iteratee中抽取出数据
+Input.EOF -> Done(15, Input.EOF)  
 ```
 
 !SLIDE
