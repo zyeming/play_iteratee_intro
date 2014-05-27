@@ -4,7 +4,7 @@
 
 !SLIDE
 
-#Play中的Iteratee及其用途
+#Play中的Iteratee及其应用
 
 !SLIDE left
 
@@ -228,6 +228,10 @@ val iteratee: Iteratee[String, List[String]] = …
 val list: List[String] = enumerator.through(
     Enumeratee.map(_.toString) run iteratee)
 ```
+
+!SLIDE
+
+![Iteratee和Enumerator示意图](images/iteratee.png)
 
 !SLIDE
 
@@ -482,7 +486,19 @@ def index = Action.async {
 
 !SLIDE
 
-#实现BigPipe
+###模块化和错误处理的问题都解决了，主页面和侧边栏在后端处理中可以并行生成模板。
+
+###但是，如果某个侧边栏特别耗时间呢？主页面必须要等到侧边栏模块都OK才能输出么？
+
+!SLIDE
+
+#实现一个简易的BigPipe
+
+!SLIDE
+
+![BigPipe示意图](images/bigpipe.png)
+
+*BigPipe把页面分成很多个模块，后端并行处理生成HTML，任何一个模块处理完成，就通过HTTP连接输出到客户端。*
 
 !SLIDE
 

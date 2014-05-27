@@ -27,7 +27,7 @@
     <section class='slide'>
       <div class='spacer top'></div>
       <div class='content'>
-        <h1>Play中的Iteratee及其用途</h1>
+        <h1>Play中的Iteratee及其应用</h1>
       </div>
       <div class='spacer bottom'></div>
     </section>
@@ -248,6 +248,13 @@
     <section class='slide'>
       <div class='spacer top'></div>
       <div class='content'>
+        <p><img src="images/iteratee.png" alt="Iteratee和Enumerator示意图" /></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
         <h1>Iteratee和Enumerator在Play中的使用</h1>
       </div>
       <div class='spacer bottom'></div>
@@ -453,7 +460,25 @@
     <section class='slide'>
       <div class='spacer top'></div>
       <div class='content'>
-        <h1>实现BigPipe</h1>
+        <h3>模块化和错误处理的问题都解决了，主页面和侧边栏在后端处理中可以并行生成模板。</h3>
+        
+        <h3>但是，如果某个侧边栏特别耗时间呢？主页面必须要等到侧边栏模块都OK才能输出么？</h3>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>实现一个简易的BigPipe</h1>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <p><img src="images/bigpipe.png" alt="BigPipe示意图" /></p>
+        
+        <p><em>BigPipe把页面分成很多个模块，后端并行处理生成HTML，任何一个模块处理完成，就通过HTTP连接输出到客户端。</em></p>
       </div>
       <div class='spacer bottom'></div>
     </section>
