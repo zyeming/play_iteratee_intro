@@ -92,7 +92,7 @@ l.foldLeft(0){ (total, elt) => total + elt }
 
 #Enumerator
 
-!SLIDE
+!SLIDE left
 
 ###Enumerator是一个生产者（Producer）。
 
@@ -104,7 +104,7 @@ Enumerator[E]的作用是生成类型为E的数据块。这些数据块的类型
 
 Enumerator是异步非阻塞的。在没有消费者（Consumer）的情况下，它不会实际生成任何数据。
 
-!SLIDE left
+!SLIDE
 
 ###Enumerator举例
 
@@ -671,3 +671,9 @@ implicit def toEnumerator(
 #THANKS
 
 #Q&A
+
+!SLIDE
+
+[Understanding Play2 Iteratees for Normal Humans](http://mandubian.com/2012/08/27/understanding-play2-iteratees-for-normal-humans/)
+[Composable And Streamable Play Apps](http://www.slideshare.net/brikis98/composable-and-streamable-play-apps)
+
