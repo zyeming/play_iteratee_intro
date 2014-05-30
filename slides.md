@@ -655,15 +655,15 @@ implicit def toEnumerator(
 
 !SLIDE left
 
+##联系方式
+
+###微博：http://weibo.com/yeming
+
+###Email：zyeming@gmail.com
+
 ##我们需要人才！！
 
 ###Android/IOS/Scala！！
-
-###有推荐费！！
-
-###我的微博：http://weibo.com/yeming
-
-###我的Email：zyeming@gmail.com
 
 
 !SLIDE
@@ -672,8 +672,10 @@ implicit def toEnumerator(
 
 #Q&A
 
-!SLIDE
+!SLIDE left
 
 [Understanding Play2 Iteratees for Normal Humans](http://mandubian.com/2012/08/27/understanding-play2-iteratees-for-normal-humans/)
+
 [Composable And Streamable Play Apps](http://www.slideshare.net/brikis98/composable-and-streamable-play-apps)
 
+[Play Framework 2.3 Documents](http://playframework.com/documentation/2.3.x/Iteratees)
