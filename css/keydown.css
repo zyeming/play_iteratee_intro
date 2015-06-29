@@ -104,10 +104,6 @@ body {
       -moz-box-pack: start;
       -ms-box-pack: start;
       box-pack: start; }
-      .keydown.deck-container .slide.full-background.zhou {
-        background-image: url(../images/zhou.jpg); }
-      .keydown.deck-container .slide.full-background.kcf {
-        background-image: url(../images/kcf.png); }
       .keydown.deck-container .slide.full-background h1 {
         display: inline;
         position: absolute;
@@ -224,7 +220,7 @@ body {
         -ms-box-pack: center;
         box-pack: center; }
       .keydown.deck-container .slide .content .CodeMirror {
-        font-size: 1.5rem; }
+        font-size: 1rem; }
     .keydown.deck-container .slide .attribution {
       -webkit-background-size: contain;
       -moz-background-size: contain;
