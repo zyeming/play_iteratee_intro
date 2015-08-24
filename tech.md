@@ -5,9 +5,19 @@
 
 !SLIDE
 
-## [神秘的程序员们](http://mp.weixin.qq.com/s?__biz=MzAxMzMxNDIyOA==&mid=206496608&idx=1&sn=adc8b6494d8d2cee713b603871d3c0b6&scene=2&from=timeline&isappinstalled=0#rd)
+}}} images/mars.jpg
+
+# 来自火星的程序员GG
 
 !SLIDE
+
+![对话](images/55_communication.png)
+
+!SLIDE
+
+# 每次打开杏仁医生的网站或者APP时，到底发生了什么？
+
+!SLIDE left
 
 ## 计算机程序
 
@@ -23,45 +33,49 @@
 
 ![杏仁医生](images/xr.png)
 
-!SLIDE
-
-# 浏览器中输入xingren.com，按下回车，到底发生了什么？
-
-!SLIDE
+!SLIDE left
 
 ## DNS
 
 xingren.com -> 203.195.142.218
 
-!SLIDE
+!SLIDE 
 
-## TCP/HTTP
+## HTTP
 
-![编程语言](images/tcp.png)
+![HTTP](images/tcp.png)
 
-!SLIDE
+!SLIDE left
 
 ## 建立链接
-- Alice：你好，我是Alice。
-- Bob：你好，我是Bod。
-- Alice：好的。
+Alice：你好，我是Alice。
 
-!SLIDE
+Bob：你好，我是Bod。
+
+Alice：好的。
+
+!SLIDE left
 
 ## 传输数据
-- Alice：请给我xingren.com
-- Bob：BlahBlahBlah...
-- Alice：请给我xingren.com/main.css
-- Bob：BlahBlahBlah...
+Alice：请给我xingren.com
 
-!SLIDE
+Bob：BlahBlahBlah...
+
+Alice：请给我xingren.com/main.css
+
+Bob：BlahBlahBlah...
+
+!SLIDE left
 
 ## 断开连接
-- Alice：我说完了。
-- Bob：我也说完了，我要挂了。
-- Alice：我也挂了。
 
-!SLIDE
+Alice：我说完了。
+
+Bob：我也说完了，我要挂了。
+
+Alice：我也挂了。
+
+!SLIDE left
 
 ## HTTPS
 
@@ -69,17 +83,25 @@ xingren.com -> 203.195.142.218
 
 确保通话的内容是加密的，其他人偷听到了也无法破译内容。
 
+!SLIDE left
+
+## WebSocket
+
+WebSocket是HTTP的一个扩展。
+
+普通HTTP必须客户端发起请求，服务端应答；服务端不能主动发送数据给客户端。如果服务器有数据需要发送给客户端，只能通过轮询等方式处理。
+
+WebSocket一旦建立连接，客户端和服务端就可以互相发送数据，从而达到实时交互的效果。
+
 !SLIDE
 
-## 编程语言
-
-编程语言就是给计算机的指令。
+## 编程语言就是给计算机的指令。
 
 ![编程语言](images/languages.jpg)
 
 !SLIDE
 
-### Ruby
+## Ruby
 
 ```ruby
 puts "Hello World"
@@ -87,7 +109,7 @@ puts "Hello World"
 
 !SLIDE
 
-### Java
+## Java
 
 ```java
 public class HelloWord {
@@ -97,75 +119,208 @@ public class HelloWord {
 }
 ```
 
-!SLIDE
+!SLIDE 
 
-### JavaScript
+## JavaScript
 
 ```Javascript
 document.write("Hello, world!");
 ```
 
-!SLIDE
+!SLIDE left
 
 ## Web前端
-
 HTML 
 
 CSS 
 
 JavaScript 
 
-## Cookie
+!SLIDE left
+
+## 浏览器兼容
+
+市场上有无数浏览器：IE、FireFox、Opera、Chrome、Safari、QQ、360等等等等。
+
+不同的浏览器对HTML/CSS/JavaScript的实现有差别，特别是IE系列，于是产生了兼容问题。
+
+曾经前端开发最痛苦的事情：兼容IE6。
 
 !SLIDE
 
-## APP客户端
+## 响应式设计
 
-iOS：Objective-C / Swift
+![对话](images/responsive.jpg)
 
-Android：Java / C
+!SLIDE left
+
+## Cookie
+
+HTTP请求是无状态的，阻碍了交互式Web应用程序的实现。
+
+服务器可以向浏览器发送一段Cookie，下一次浏览器访问会把Cookie同时发给服务器。
+
+Cookie的用途：用户登录、购物车、互联网广告、简单的首次访问判断等等。
+
+!SLIDE left
+
+## 客户端APP
+
+iOS：Objective-C / Swift，使用XCode开发
+
+Android：Java / C，使用Eclipse、IDEA等开发。
 
 其他：塞班、Mac应用、Windows程序等
 
-!SLIDE
+!SLIDE left
 
-### 我们的APP是Hybrid（混合式）
+## 客户端APP的发布
 
-!SLIDE
+iOS：
+
+- 正规渠道：Apple App Store，需要审核（1-2周）。
+- 企业版：立即发布，但有限制。
+- 越狱渠道。
+
+Android：应用宝、豌豆荚等各个应用商店。
+
+!SLIDE left
+
+## 客户端App和Web页面的区别
+
+客户端App：能使用原生的各种功能，性能更好；但发布周期较长。
+
+Web App：能同时兼容iOS和Android，发布更灵活；功能受限制，性能也较差。
+
+!SLIDE left
+
+## 杏仁医生是Hybrid（混合式）App
+
+杏仁APP中，其实有很多页面是Web页面。比如：
+
+- 各种活动页面如名医带班等
+- 心意页面
+- 患教中心
+- 随访模板中心
+- 诊疗计划
+- 我的主页
+
+有些Web页面甚至是第三方的，比如UpToDate。
+
+!SLIDE left
 
 ## 后端
 
-Java
+使用Java/Scala开发。后端的任务就是：
 
-.Net
+- 处理页面和客户端的Http请求，返回HTML或者格式化的数据。
+- 处理客户端的WebSocket连接，及时推送数据给客户端。
+- 处理定时任务，比如过期判断、日程提醒等。
 
-PHP
+杏仁后台有三台服务器，用户访问时会随机连接到其中一台。
 
-Ruby
+!SLIDE left
 
-Scala
+## API
+API（Application Programming Interface）就是应用程序之间的接口。
 
-## 第三方
+互联网应用通过开放API来实现各种互联，比如新浪开放平台、微信公众号等。
 
-微信公众号/开放平台/企业号
+!SLIDE left
 
-腾讯COS/万象云图
+## 微信平台
+微信公众号：接入“杏仁医生”公众号，包括微信中的Web页面。
 
-JPush
+微信开放平台：使用微信登录和分享。
 
-友盟
+微信支付：通过微信支付收费。
 
-OneAPM
+!SLIDE left
 
-!SLIDE
+## 其他第三方工具
+腾讯COS/万象云图：处理我们的图片及其他文件。
+
+JPush：处理消息通知。
+
+友盟/OneAPM：统计各种数据和性能分析。
+
+!SLIDE left
 
 ## 数据库
 
+应用所有的数据都保存在数据库里面。数据库分为关系型数据库（MySQL等），非关系型数据库（MongoDB等）。最常用的就是关系型数据库。
+
+关系型数据库由很多表组成，每个表其实就是一个有很多数据的超级Excel表，通过专用的SQL查询语言来查询表中的数据。
+
+!SLIDE 
+
+## 数据库表
+
+![数据库](images/table.png)
+
+一个简单的查询：
+
+```Sql
+select id, name, age from User where name='Bob'
+```
+
+!SLIDE left
+
+## 缓存
+缓存无处不在：
+- 页面缓存：浏览器会缓存页面、JS、CSS以及图片，避免重复下载。
+- 数据缓存：后台会混存部分数据，避免每次都查询数据库。
+
+缓存最大的问题是会带来不一致性。
+
+
+
 !SLIDE
 
-## 开发过程
+# 程序员GG们是怎么开发杏仁医生的呢？
 
+!SLIDE
 
+![有效流程](images/38_effective_process.png)
+
+!SLIDE
+
+## 杏仁的开发流程
+![版本开发流程](images/process.png)
+
+!SLIDE left
+
+### 如何提需求
+
+提供需求动机、目标和优先级。
+
+说明需求的业务细节（而非实现细节）。
+
+避免需求频繁变更，及时反馈和沟通问题。
+
+完成后及时验收确认，并提供反馈。
+
+!SLIDE left
+
+## 如何提BUG
+
+要提供BUG出现的版本，系统等信息。
+
+要清晰的描述BUG重现的步骤。
+
+最好提供BUG出现的截图，登录账号等。
+
+!SLIDE left
+
+## 范例
+
+不要这样：XX活动页面出错了！
+
+要这样：杏仁医生iOS 3.3.1版本，打开XX活动页面，在输入框输入XXX，点击确定。出现服务器错误的提示页面，截图见附件。
+
+!SLIDE
+
+## 技术的作用从短期来看往往被高估，但是从长期来看又往往容易被低估
 
 
 
