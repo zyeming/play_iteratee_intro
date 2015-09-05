@@ -1,7 +1,7 @@
 
 !SLIDE
 
-# 杏仁技术入门
+# 杏仁的第一堂技术课
 
 !SLIDE
 
@@ -29,9 +29,13 @@
 
 !SLIDE
 
-## 杏仁医生
+## 杏仁医生的架构
 
 ![杏仁医生](images/xr.png)
+
+!SLIDE
+
+# 数据传输
 
 !SLIDE left
 
@@ -50,7 +54,7 @@ xingren.com -> 203.195.142.218
 ## 建立链接
 Alice：你好，我是Alice。
 
-Bob：你好，我是Bod。
+Bob：你好，我是Bob。
 
 Alice：好的。
 
@@ -77,14 +81,6 @@ Alice：我也挂了。
 
 !SLIDE left
 
-## HTTPS
-
-确保Bob就是Alice要找的那个Bob，不是其他骗子。
-
-确保通话的内容是加密的，其他人偷听到了也无法破译内容。
-
-!SLIDE left
-
 ## WebSocket
 
 WebSocket是HTTP的一个扩展。
@@ -92,6 +88,20 @@ WebSocket是HTTP的一个扩展。
 普通HTTP必须客户端发起请求，服务端应答；服务端不能主动发送数据给客户端。如果服务器有数据需要发送给客户端，只能通过轮询等方式处理。
 
 WebSocket一旦建立连接，客户端和服务端就可以互相发送数据，从而达到实时交互的效果。
+
+!SLIDE left
+
+## SSL
+
+确保Bob就是Alice要找的那个Bob，不是其他骗子。
+
+确保通话的内容是加密的，其他人偷听到了也无法破译内容。
+
+HTTPS就是加密的HTTP，WSS就是加密的WebSocket。
+
+!SLIDE
+
+# Web前端
 
 !SLIDE
 
@@ -146,12 +156,6 @@ JavaScript
 
 曾经前端开发最痛苦的事情：兼容IE6。
 
-!SLIDE
-
-## 响应式设计
-
-![对话](images/responsive.jpg)
-
 !SLIDE left
 
 ## Cookie
@@ -162,9 +166,13 @@ HTTP请求是无状态的，阻碍了交互式Web应用程序的实现。
 
 Cookie的用途：用户登录、购物车、互联网广告、简单的首次访问判断等等。
 
+!SLIDE
+
+# 客户端APP
+
 !SLIDE left
 
-## 客户端APP
+## 客户端APP的分类
 
 iOS：Objective-C / Swift，使用XCode开发
 
@@ -186,6 +194,24 @@ Android：应用宝、豌豆荚等各个应用商店。
 
 !SLIDE left
 
+## 客户端APP的数据
+
+客户端APP从服务端获取的内容不是HTML等，而是特定格式的数据。
+
+常用的数据格式就是JSON，例如：
+
+```
+{
+    "success": true ,
+    "results": {
+        "hasMore": true ,
+        "objects": ["a", "b"]
+    }
+}
+```
+
+!SLIDE left
+
 ## 客户端App和Web页面的区别
 
 客户端App：能使用原生的各种功能，性能更好；但发布周期较长。
@@ -194,7 +220,7 @@ Web App：能同时兼容iOS和Android，发布更灵活；功能受限制，性
 
 !SLIDE left
 
-## 杏仁医生是Hybrid（混合式）App
+## 杏仁医生是混合式的App
 
 杏仁APP中，其实有很多页面是Web页面。比如：
 
@@ -207,17 +233,29 @@ Web App：能同时兼容iOS和Android，发布更灵活；功能受限制，性
 
 有些Web页面甚至是第三方的，比如UpToDate。
 
+!SLIDE
+
+# 服务端
+
 !SLIDE left
 
-## 后端
-
-使用Java/Scala开发。后端的任务就是：
+## 服务端的任务
 
 - 处理页面和客户端的Http请求，返回HTML或者格式化的数据。
 - 处理客户端的WebSocket连接，及时推送数据给客户端。
 - 处理定时任务，比如过期判断、日程提醒等。
 
-杏仁后台有三台服务器，用户访问时会随机连接到其中一台。
+!SLIDE left
+
+## 服务端的发布
+
+杏仁服务端有两套服务器，一套是用于测试的测试环境，一套是正式的生产环境。两台环境的数据（包括用户）是分离的。
+
+发布新功能时，一般会先发到测试环境进行验证，然后再发布到生产环境。
+
+需要使用测试环境时，如果是APP则需要使用对应测试环境的APP版本，如果是Web页面只需要调整URL即可。
+
+杏仁生产环境有三台服务器用户访问时会随机连接到其中一台。
 
 !SLIDE left
 
@@ -273,7 +311,11 @@ select id, name, age from User where name='Bob'
 
 缓存最大的问题是会带来不一致性。
 
+!SLIDE
 
+## 杏仁医生的架构
+
+![杏仁医生](images/xr.png)
 
 !SLIDE
 
@@ -290,7 +332,7 @@ select id, name, age from User where name='Bob'
 
 !SLIDE left
 
-### 如何提需求
+## 如何提需求
 
 提供需求动机、目标和优先级。
 
@@ -322,5 +364,7 @@ select id, name, age from User where name='Bob'
 
 ## 技术的作用从短期来看往往被高估，但是从长期来看又往往容易被低估
 
+!SLIDE
 
+# 谢谢
 
