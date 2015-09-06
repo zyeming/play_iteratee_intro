@@ -298,7 +298,7 @@
         
         <p>常用的数据格式就是JSON，例如：</p>
         
-        <p><textarea class='code' display='none' mode='&#x000A;{'>"success": true ,&#x000A;    "results": {&#x000A;        "hasMore": true ,&#x000A;        "objects": ["a", "b"]&#x000A;    }&#x000A;}</textarea>
+        <p><textarea class='code' display='none' mode='JavaScript'>{&#x000A;    "success": true ,&#x000A;    "results": {&#x000A;        "hasMore": true ,&#x000A;        "objects": ["a", "b"]&#x000A;    }&#x000A;}</textarea>
     </p>
       </div>
       <div class='spacer bottom'></div>
@@ -323,11 +323,8 @@
         
         <ul>
         <li>各种活动页面如名医带班等</li>
-        <li>心意页面</li>
-        <li>患教中心</li>
-        <li>随访模板中心</li>
-        <li>诊疗计划</li>
-        <li>我的主页</li>
+        <li>患教中心和随访模板中心等</li>
+        <li>诊疗记录和我的主页等</li>
         </ul>
         
         
@@ -360,13 +357,17 @@
       <div class='content'>
         <h2>服务端的发布</h2>
         
-        <p>杏仁服务端有两套服务器，一套是用于测试的测试环境，一套是正式的生产环境。两台环境的数据（包括用户）是分离的。</p>
+        <p>杏仁服务端有两套环境，一套是用于测试的测试环境，一套是正式的生产环境。两套环境的数据（包括用户）是分离的。</p>
         
-        <p>发布新功能时，一般会先发到测试环境进行验证，然后再发布到生产环境。</p>
+        <p>发布新功能时，一般会先发到测试环境进行验证，然后再发布到生产环境。这个过程叫做发布或者部署。</p>
         
-        <p>需要使用测试环境时，如果是APP则需要使用对应测试环境的APP版本，如果是Web页面只需要调整URL即可。</p>
+        <h2>服务端的发布</h2>
         
-        <p>杏仁生产环境有三台服务器用户访问时会随机连接到其中一台。</p>
+        <p>需要使用测试环境时：
+        - 如果是APP，需要使用测试版本的APP。
+        - 如果是Web页面只需要调整URL即可。测试环境的URL为 http://yisheng.aihaisi.com 和 http://xx.aihaisi.com 。</p>
+        
+        <p>杏仁生产环境目前有三台服务器，用户访问时会随机连接到其中一台。</p>
       </div>
       <div class='spacer bottom'></div>
     </section>
@@ -437,9 +438,13 @@
       <div class='content'>
         <h2>缓存</h2>
         
-        <p>缓存无处不在：
-        - 页面缓存：浏览器会缓存页面、JS、CSS以及图片，避免重复下载。
-        - 数据缓存：后台会混存部分数据，避免每次都查询数据库。</p>
+        <p>缓存无处不在：</p>
+        
+        <ul>
+        <li>页面缓存：浏览器会缓存页面、JS、CSS以及图片，避免重复下载。</li>
+        <li>数据缓存：后台会混存部分数据，避免每次都查询数据库。</li>
+        </ul>
+        
         
         <p>缓存最大的问题是会带来不一致性。</p>
       </div>
