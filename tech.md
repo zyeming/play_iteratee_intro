@@ -250,9 +250,12 @@ Web App：能同时兼容iOS和Android，发布更灵活；功能受限制，性
 
 发布新功能时，一般会先发到测试环境进行验证，然后再发布到生产环境。这个过程叫做发布或者部署。
 
+!SLIDE left
+
 ## 服务端的发布
 
 需要使用测试环境时：
+
 - 如果是APP，需要使用测试版本的APP。
 - 如果是Web页面只需要调整URL即可。测试环境的URL为 http://yisheng.aihaisi.com 和 http://xx.aihaisi.com 。
 
@@ -335,6 +338,10 @@ select id, name, age from User where name='Bob'
 ## 杏仁的开发流程
 
 ![版本开发流程](images/process.png)
+
+!SLIDE
+
+![需求沟通](images/requirement.gif)
 
 !SLIDE left
 
