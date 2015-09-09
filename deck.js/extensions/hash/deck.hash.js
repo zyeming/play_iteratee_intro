@@ -109,7 +109,7 @@ slide.
 		
 		$(opts.selectors.hashLink).attr('href', hash);
 		if (Modernizr.history) {
-			window.history.replaceState({}, "", hash);
+			//window.history.replaceState({}, "", hash);
 		}
 	});
 	

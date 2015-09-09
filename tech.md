@@ -61,6 +61,7 @@ Alice：好的。
 !SLIDE left
 
 ## 传输数据
+
 Alice：请给我xingren.com
 
 Bob：BlahBlahBlah...
@@ -140,11 +141,24 @@ document.write("Hello, world!");
 !SLIDE left
 
 ## Web前端
+
 HTML 
 
 CSS 
 
 JavaScript 
+
+!SLIDE left
+
+![杏仁首页](images/xrhome.png)
+
+!SLIDE left
+
+![HTML](images/html.png)
+
+!SLIDE left
+
+![JavaScript](images/js.png)
 
 !SLIDE left
 
@@ -244,26 +258,29 @@ Web App：能同时兼容iOS和Android，发布更灵活；功能受限制，性
 
 !SLIDE left
 
-## 服务端的发布
+## 服务端的环境
 
-杏仁服务端有两套环境，一套是用于测试的测试环境，一套是正式的生产环境。两套环境的数据（包括用户）是分离的。
-
-发布新功能时，一般会先发到测试环境进行验证，然后再发布到生产环境。这个过程叫做发布或者部署。
-
-!SLIDE left
-
-## 服务端的发布
+杏仁服务端有两套环境，一套是用于测试的测试环境，一套是正式的生产环境（即所有用户访问的环境）。两套环境的数据（包括用户）是分离的。
 
 需要使用测试环境时：
 
 - 如果是APP，需要使用测试版本的APP。
 - 如果是Web页面只需要调整URL即可。测试环境的URL为 http://yisheng.aihaisi.com 和 http://xx.aihaisi.com 。
 
+!SLIDE left
+
+## 服务端的发布
+
+把开发完成的功能更新到测试环境或者生产环境，这个过程叫做发布或者部署。
+
+一般在发布到生产环境之前，会先发布到测试环境，由开发、QA等进行测试和验证。
+
 杏仁生产环境目前有三台服务器，用户访问时会随机连接到其中一台。
 
 !SLIDE left
 
 ## API
+
 API（Application Programming Interface）就是应用程序之间的接口。
 
 互联网应用通过开放API来实现各种互联，比如新浪开放平台、微信公众号等。
@@ -272,15 +289,13 @@ API（Application Programming Interface）就是应用程序之间的接口。
 
 ## 微信平台
 
-微信公众号：接入“杏仁医生”公众号，包括微信中的Web页面。
-
-微信开放平台：使用微信登录和分享。
-
-微信支付：通过微信支付收费。
+![JavaScript](images/weixin.png)
 
 !SLIDE left
 
 ## 其他第三方工具
+
+微信支付/支付宝：付款。
 
 腾讯COS/万象云图：处理我们的图片及其他文件。
 
@@ -379,5 +394,5 @@ select id, name, age from User where name='Bob'
 
 !SLIDE
 
-# 谢谢
+# 谢谢!
 
