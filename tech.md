@@ -104,6 +104,18 @@ HTTPS就是加密的HTTP，WSS就是加密的WebSocket。
 
 # Web前端
 
+!SLIDE left
+
+![杏仁首页](images/xrhome.png)
+
+# Web前端技术
+
+语言：HTML/CSS/JavaScript 
+
+图片等资源
+
+Cookie
+
 !SLIDE
 
 ## 编程语言就是给计算机的指令。
@@ -140,25 +152,30 @@ document.write("Hello, world!");
 
 !SLIDE left
 
-## Web前端
-
-HTML 
-
-CSS 
-
-JavaScript 
-
-!SLIDE left
-
-![杏仁首页](images/xrhome.png)
-
-!SLIDE left
-
 ![HTML](images/html.png)
 
 !SLIDE left
 
 ![JavaScript](images/js.png)
+
+!SLIDE left
+
+## 页面打开速度
+
+影响页面打开速度的因素：
+
+- 用户网络的带宽和延迟
+- 请求数和页面大小
+- JavaScript执行时间
+- 服务器执行时间
+
+网页打开每慢1秒，就有5%~10%的用户选择离开。
+
+!SLIDE
+
+## 移动网络的带宽和延迟
+
+![带宽和延迟](images/speed.png)
 
 !SLIDE left
 
@@ -285,11 +302,20 @@ API（Application Programming Interface）就是应用程序之间的接口。
 
 互联网应用通过开放API来实现各种互联，比如新浪开放平台、微信公众号等。
 
-!SLIDE left
-
-## 微信平台
+!SLIDE
 
 ![JavaScript](images/weixin.png)
+
+!SLIDE left
+
+## 通过微信
+
+- 接受用户发的文本、图片、语音、视频、地理位置等信息；
+- 接受用户菜单点击、关注、取消关注、扫描二维码等各种操作；
+- 用户交互（指发送任意信息或者点击菜单）48小时内，给用户推送文本、图文等各种消息；
+- 给用户发送指定格式的模板消息（不限制48小时）；
+- 用户在微信内浏览页面，可以验证用户身份并拿到微信名、头像等基本信息；
+- 支付、卡券、摇一摇等等等等；
 
 !SLIDE left
 
@@ -322,6 +348,12 @@ JPush：处理消息通知。
 ```Sql
 select id, name, age from User where name='Bob'
 ```
+
+!SLIDE
+
+## 医院表
+
+![医院表](images/hospital.png)
 
 !SLIDE left
 
@@ -386,7 +418,13 @@ select id, name, age from User where name='Bob'
 
 不要这样：XX活动页面出错了！
 
-要这样：杏仁医生iOS 3.3.1版本，打开XX活动页面，在输入框输入XXX，点击确定。出现服务器错误的提示页面，截图见附件。
+要这样：
+
+- 杏仁医生iOS 3.3.1版本
+- 步骤：打开XX活动页面，在输入框输入XXX，点击确定。
+- 结果：出现服务器错误的提示页面，截图见附件。
+- 期望：参与活动成功，显示结果页面。
+
 
 !SLIDE
 
