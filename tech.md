@@ -3,6 +3,8 @@
 
 # 杏仁的第一堂技术课
 
+![签到](images/qian.jpg)
+
 !SLIDE
 
 }}} images/mars.jpg
@@ -437,4 +439,6 @@ select id, name, age from User where name='Bob'
 !SLIDE
 
 # 谢谢!
+
+![评论](images/ping.jpg)
 
