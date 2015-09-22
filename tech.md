@@ -5,11 +5,9 @@
 
 ![签到](images/qian.jpg)
 
-!SLIDE
+!SLIDE 
 
-}}} images/mars.jpg
-
-# 来自火星的程序员GG
+## 为什么要了解技术？
 
 !SLIDE
 
@@ -54,6 +52,7 @@ xingren.com -> 203.195.142.218
 !SLIDE left
 
 ## 建立链接
+
 Alice：你好，我是Alice。
 
 Bob：你好，我是Bob。
@@ -112,11 +111,11 @@ HTTPS就是加密的HTTP，WSS就是加密的WebSocket。
 
 !SLIDE left
 
-# Web前端技术
+## Web前端技术
 
 语言：HTML/CSS/JavaScript 
 
-图片等资源
+资源：页面/文件/图片
 
 Cookie
 
