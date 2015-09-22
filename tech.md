@@ -104,9 +104,11 @@ HTTPS就是加密的HTTP，WSS就是加密的WebSocket。
 
 # Web前端
 
-!SLIDE left
+!SLIDE 
 
 ![杏仁首页](images/xrhome.png)
+
+!SLIDE left
 
 # Web前端技术
 
@@ -272,6 +274,8 @@ Web App：能同时兼容iOS和Android，发布更及时更灵活。
 - 处理页面和客户端的Http请求，返回HTML或者格式化的数据。
 - 处理客户端的WebSocket连接，及时推送数据给客户端。
 - 处理定时任务，比如过期判断、日程提醒等。
+
+杏仁的后台使用Scala开发的，也有少量Java代码。
 
 !SLIDE left
 
