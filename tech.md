@@ -145,7 +145,7 @@ public class HelloWord {
 
 ## JavaScript
 
-```Javascript
+```JavaScript
 document.write("Hello, world!");
 ```
 

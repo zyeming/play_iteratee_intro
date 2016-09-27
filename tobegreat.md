@@ -3,7 +3,7 @@
 
 # From Good To Great
 
-## 软件工程师进阶之路
+## 工程师进阶之路
 
 !SLIDE
 
